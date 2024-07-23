@@ -88,7 +88,7 @@
                 return int.MaxValue;
 
             
-            if (IsRookInTheWayOfBishop())
+            if (IsRookBlockingViewOfQueenForBishop())
             {
                 return 3; // At least 3 moves to get to Queen - and the rook can get there faster
             }
@@ -130,44 +130,26 @@
         }
 
 
-        private bool IsRookInTheWayOfBishop()
+        private bool IsRookBlockingViewOfQueenForBishop()
         {
-            if (_rookX == _queenX && _rookY == _queenY)
-                return true;
+            int rookDistX = Math.Abs(_bishopX - _rookX);
+            int rookDistY = Math.Abs(_bishopY - _rookY);
+            if (rookDistX != rookDistY)
+                return false; // Rook not on a square that can be moved to by bishop
+            
+            int queenDistX = Math.Abs(_bishopX - _queenX);
+            int queenDistY = Math.Abs(_bishopY - _queenY);
+            if (queenDistX != queenDistY)
+                return false; // Queen not on a square that can be moved to by bishop
 
-            int dx, dy;
-            if (_queenX < _bishopX)
-                dx = -1;
-            else
-                dx = 1;
+            // Check to see if the rook and queen are on the same slope
+            var rookSignX = _bishopX - _rookX > 0 ? 1 : 0;
+            var rookSignY = _bishopY - _rookY > 0 ? 1 : 0;
 
-            if (_queenY < _bishopY)
-                dy = -1;
-            else
-                dy = 1;
+            var queenSignX = _bishopX - _queenX > 0 ? 1 : 0;
+            var queenSignY = _bishopY - _queenY > 0 ? 1 : 0;
 
-            var x = _bishopX;
-            var y = _bishopY;
-
-            for (;;)
-            {
-                // Let's check if we bump into the queen before the rook
-                if (x == _queenX && y == _queenY)
-                    return false; 
-
-                if (x == _rookX && y == _rookY)
-                    return true; // Yes, bishop is in the way of the queen
-
-                x += dx;
-                y += dy;
-
-                // are we off the board?
-                if (x == 0 || x == 9)
-                    return false;
-
-                if (y == 0 || y == 9)
-                    return false;
-            }
+            return (rookSignX == queenSignX && rookSignY == queenSignY && rookDistX < queenDistX);
         }
     }
 }
