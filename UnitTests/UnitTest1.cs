@@ -72,6 +72,20 @@ namespace UnitTests
             Assert.AreEqual(moves, 1);
         }
 
+        [TestMethod]
+        public void TestMethod8()
+        {
+            int a = 8, b = 4, c = 8, d = 8, e = 7, f = 7;
+            var moves = _solution.MinMovesToCaptureTheQueen(a, b, c, d, e, f);
+            Assert.AreEqual(moves, 1);
+        }
 
+        [TestMethod]
+        public void TestMethod9()
+        {
+            int a = 6, b = 8, c = 6, d = 6, e = 6, f = 3;
+            var moves = _solution.MinMovesToCaptureTheQueen(a, b, c, d, e, f);
+            Assert.AreEqual(moves, 2);
+        }
     }
 }
