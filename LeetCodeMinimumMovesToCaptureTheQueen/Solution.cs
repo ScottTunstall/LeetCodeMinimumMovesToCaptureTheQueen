@@ -115,13 +115,7 @@
             return isSquare1White == isSquare2White;
         }
 
-
-        private bool IsInCorner(int x, int y)
-        {
-            return (x == 1 || x == 8) && (y == 1 || y == 8);
-        }
-
-
+        
         private bool IsSquareReachableByBishopInSingleMove(int currentX, int currentY, int newX, int newY)
         {
             int dx = Math.Abs(newX - currentX);
@@ -132,15 +126,6 @@
 
             return true;
         }
-
-
-        //private bool CanMoveRook(int currentX, int currentY, int newX, int newY)
-        //{
-        //    if (currentX != newX && currentY != newY)
-        //        return false;
-
-        //    return !IsBishopInTheWayOfRook(currentX, currentY, newX, newY);
-        //}
 
 
         private bool IsRookInTheWayOfBishop(int currentX, int currentY)
