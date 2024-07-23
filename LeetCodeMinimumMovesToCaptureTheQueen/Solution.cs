@@ -1,5 +1,7 @@
 ﻿namespace LeetCodeMinimumMovesToCaptureTheQueen
 {
+    // With thanks to https://lichess.org/editor which let me visualise the pieces on the board
+    // in order to sanity check the algorithm
     public class Solution
     {
         private int _rookY;
@@ -86,12 +88,12 @@
                 return int.MaxValue;
 
             
-            if (IsRookInTheWayOfBishop(_bishopX, _bishopY))
+            if (IsRookInTheWayOfBishop())
             {
                 return 3; // At least 3 moves to get to Queen - and the rook can get there faster
             }
 
-            if (IsSquareReachableByBishopInSingleMove(_bishopX,_bishopY,_queenX,_queenY))
+            if (IsSquareReachableByBishopInSingleMove(_queenX,_queenY))
             {
                 return 1;
             }
@@ -116,10 +118,10 @@
         }
 
         
-        private bool IsSquareReachableByBishopInSingleMove(int currentX, int currentY, int newX, int newY)
+        private bool IsSquareReachableByBishopInSingleMove(int newX, int newY)
         {
-            int dx = Math.Abs(newX - currentX);
-            int dy = Math.Abs(newY - currentY);
+            int dx = Math.Abs(newX - _bishopX);
+            int dy = Math.Abs(newY - _bishopY);
 
             if (dx != dy)
                 return false;
@@ -128,30 +130,30 @@
         }
 
 
-        private bool IsRookInTheWayOfBishop(int currentX, int currentY)
+        private bool IsRookInTheWayOfBishop()
         {
             if (_rookX == _queenX && _rookY == _queenY)
                 return true;
 
             int dx, dy;
-            if (_queenX < currentX)
+            if (_queenX < _bishopX)
                 dx = -1;
             else
                 dx = 1;
 
-            if (_queenY < currentY)
+            if (_queenY < _bishopY)
                 dy = -1;
             else
                 dy = 1;
 
-            var x = currentX;
-            var y = currentY;
+            var x = _bishopX;
+            var y = _bishopY;
 
             for (;;)
             {
                 // Let's check if we bump into the queen before the rook
                 if (x == _queenX && y == _queenY)
-                    return false; // No, bishop is not in way of queen
+                    return false; 
 
                 if (x == _rookX && y == _rookY)
                     return true; // Yes, bishop is in the way of the queen

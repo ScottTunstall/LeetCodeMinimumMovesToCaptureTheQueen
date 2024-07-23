@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CaptureTheBlackQueen\LeetCodeMinimumMovesToCaptureTheQueen.csproj" />
     <ProjectReference Include="..\LeetCodeMinimumMovesToCaptureTheQueen\LeetCodeMinimumMovesToCaptureTheQueen.csproj" />
   </ItemGroup>
 
